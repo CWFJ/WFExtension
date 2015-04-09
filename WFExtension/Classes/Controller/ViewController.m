@@ -28,7 +28,7 @@
 }
 
 - (void)test{
-    NSDictionary *dict = @{@"name":@"Jap", @"dogs":@[@{@"name":@"WangAwa"},@{@"name":@"wangCai"}]};
+    NSDictionary *dict = @{@"name":@"Jap", @"dogs":@[@{@"name":@"WangAwa"},@{@"name":@"wangCai"}], @"dogAges":@[@(1.1), @(2.1)]};
     Person *per = [[Person alloc] init];
     [per cfgWithDict:dict];
     

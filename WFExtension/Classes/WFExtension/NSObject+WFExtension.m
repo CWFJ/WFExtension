@@ -62,9 +62,9 @@
          *  递归调用进行配置，将字典转化为对象
          *
          *************************************************************/
-        else if(![member.type hasPrefix:@"NS"])
+        else if(![member.type hasPrefix:@"NS"] && dict[member.name])
         {
-            memValue = [[NSClassFromString(member.type) alloc] initWithDict:dict];
+            memValue = [[NSClassFromString(member.type) alloc] initWithDict:dict[member.name]];
         }
         // 若member是系统对象
         [self setValue:memValue forKey:member.name];
@@ -95,7 +95,16 @@
  */
 + (NSArray *)objcsWithDictArray:(NSArray *)dictArray{
     NSMutableArray *objcs = [NSMutableArray arrayWithCapacity:dictArray.count];
-    
+    if( [NSStringFromClass([self class]) hasPrefix:@"NS"]) {
+        /** Foundation 自带数据类型 */
+        for (id key in dictArray) {
+            if( [key isMemberOfClass:[self class]]) {
+                /** 数组内容非目标数组内容 */
+                return nil;
+            }
+        }
+        return dictArray.copy;
+    }
     [dictArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
         id obj = [[self alloc] initWithDict:dict];
         [objcs addObject:obj];

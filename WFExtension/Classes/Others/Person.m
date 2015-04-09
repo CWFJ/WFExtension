@@ -12,7 +12,7 @@
 @implementation Person
 - (NSDictionary *)getArrayInsideClassesTable
 {
-    return @{@"dogs":@"Dog"};
+    return @{@"dogs":@"Dog", @"dogAges":@"NSNumber"};
 }
 
 @end

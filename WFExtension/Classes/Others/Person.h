@@ -13,4 +13,5 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *city;
 @property (nonatomic, strong) NSArray *dogs;
+@property (nonatomic, strong) NSArray *dogAges;
 @end
