@@ -32,4 +32,21 @@
  */
 + (instancetype)memberWithIvar:(Ivar)var;
 
+/**
+ *  判断是否为基本数据类型
+ *
+ *  @param type 需判断的类型编码名称
+ *
+ *  @return 结果
+ */
++ (BOOL)isBasicType:(NSString *)type;
+
+/**
+ *  判断是否为Foundation数据类型
+ *
+ *  @param type 需判断的类型编码名称
+ *
+ *  @return 结果
+ */
++ (BOOL)isFoundationType:(NSString *)type;
 @end

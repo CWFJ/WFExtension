@@ -39,6 +39,9 @@
         NSString *memName = member.name;
         // 默认值
         id memValue       = dict[memName];
+
+        if(!memValue) return;
+
         /**************************************************************
          *
          *  若member是NSArray dict[member.name]应该是字典数组
@@ -62,10 +65,45 @@
          *  递归调用进行配置，将字典转化为对象
          *
          *************************************************************/
-        else if(![member.type hasPrefix:@"NS"] && dict[member.name])
+        else if(![WFMember isBasicType:member.type] && ![WFMember isFoundationType:member.type])
         {
             memValue = [[NSClassFromString(member.type) alloc] initWithDict:dict[member.name]];
         }
+        
+        /**************************************************
+         *
+         *  特殊不能够直接KVC的对象的处理
+         *
+         *************************************************/
+        else if(([member.type isEqualToString:@"Q"] || [member.type isEqualToString:@"c"]) && [memValue isKindOfClass:[NSString class]]) {
+            /** NSUInteger及char类型需要转化为NSNumber再进行转化 */
+            memValue = @([memValue integerValue]);
+        }
+        /**************************************************
+         *
+         *  字典中数值类型与模型中不一致，提供部分转换
+         *
+         *************************************************/
+        Class srcClass = [memValue class];
+        Class dstClass = NSClassFromString(member.type);
+        /** NSString ---> NSURL */
+        if([dstClass isSubclassOfClass:[NSURL class]] && [srcClass isSubclassOfClass:[NSString class]]) {
+            memValue = [NSURL URLWithString:memValue];
+        }
+        /** NSURL ---> NSString */
+        else if ([dstClass isSubclassOfClass:[NSString class]] && [srcClass isSubclassOfClass:[NSURL class]]) {
+            memValue = [(NSURL *)memValue absoluteString];
+        }
+        /** NSString ---> NSNumber */
+        else if ([dstClass isSubclassOfClass:[NSNumber class]] && [srcClass isSubclassOfClass:[NSString class]]) {
+            memValue = [[NSNumberFormatter new] numberFromString:memValue];
+        }
+        /** NSNumber ---> NSString */
+        else if ([dstClass isSubclassOfClass:[NSString class]] && [srcClass isSubclassOfClass:[NSNumber class]]) {
+            memValue = [(NSNumber *)memValue description];
+        }
+        
+        
         // 若member是系统对象
         [self setValue:memValue forKey:member.name];
     }];

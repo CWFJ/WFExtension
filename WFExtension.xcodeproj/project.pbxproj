@@ -18,6 +18,8 @@
 		DC32A6CB1ABCF88900ED83EA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32A6C51ABCF88900ED83EA /* ViewController.m */; };
 		DC32A6CC1ABCF88900ED83EA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32A6C81ABCF88900ED83EA /* AppDelegate.m */; };
 		DC32A6CD1ABCF88900ED83EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32A6C91ABCF88900ED83EA /* main.m */; };
+		DC40FC3E1AE1EBDA00BD0A6C /* WFStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC40FC3B1AE1EBDA00BD0A6C /* WFStatusModel.m */; };
+		DC40FC3F1AE1EBDA00BD0A6C /* WFUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC40FC3D1AE1EBDA00BD0A6C /* WFUserModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +37,10 @@
 		DC0558D31AC15D37005664E1 /* NSObject+WFExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WFExtension.m"; sourceTree = "<group>"; };
 		DC0558D51AC15FB1005664E1 /* WFMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFMember.h; sourceTree = "<group>"; };
 		DC0558D61AC15FB1005664E1 /* WFMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFMember.m; sourceTree = "<group>"; };
-		DC0558D81AC16590005664E1 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		DC0558D91AC16590005664E1 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		DC0558DB1AC180EC005664E1 /* Dog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
-		DC0558DC1AC180EC005664E1 /* Dog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
+		DC0558D81AC16590005664E1 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = ../Others/Person.h; sourceTree = "<group>"; };
+		DC0558D91AC16590005664E1 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = ../Others/Person.m; sourceTree = "<group>"; };
+		DC0558DB1AC180EC005664E1 /* Dog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dog.h; path = ../Others/Dog.h; sourceTree = "<group>"; };
+		DC0558DC1AC180EC005664E1 /* Dog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dog.m; path = ../Others/Dog.m; sourceTree = "<group>"; };
 		DC32A6981ABCF7F100ED83EA /* WFExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WFExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC32A69C1ABCF7F100ED83EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC32A6A61ABCF7F100ED83EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +55,10 @@
 		DC32A6C81ABCF88900ED83EA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DC32A6C91ABCF88900ED83EA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DC32A6CF1ABCF8E800ED83EA /* WFExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WFExtension.h; sourceTree = "<group>"; };
+		DC40FC3A1AE1EBDA00BD0A6C /* WFStatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFStatusModel.h; sourceTree = "<group>"; };
+		DC40FC3B1AE1EBDA00BD0A6C /* WFStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFStatusModel.m; sourceTree = "<group>"; };
+		DC40FC3C1AE1EBDA00BD0A6C /* WFUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFUserModel.h; sourceTree = "<group>"; };
+		DC40FC3D1AE1EBDA00BD0A6C /* WFUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFUserModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 		DC32A6C21ABCF88900ED83EA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DC40FC391AE1EBC100BD0A6C /* Model */,
 				DC32A6CE1ABCF8C500ED83EA /* WFExtension */,
 				DC32A6C31ABCF88900ED83EA /* Controller */,
 				DC32A6C61ABCF88900ED83EA /* Others */,
@@ -154,10 +161,6 @@
 				DC32A6C71ABCF88900ED83EA /* AppDelegate.h */,
 				DC32A6C81ABCF88900ED83EA /* AppDelegate.m */,
 				DC32A6C91ABCF88900ED83EA /* main.m */,
-				DC0558D81AC16590005664E1 /* Person.h */,
-				DC0558D91AC16590005664E1 /* Person.m */,
-				DC0558DB1AC180EC005664E1 /* Dog.h */,
-				DC0558DC1AC180EC005664E1 /* Dog.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -179,6 +182,21 @@
 				DC0558D61AC15FB1005664E1 /* WFMember.m */,
 			);
 			path = WFExtension;
+			sourceTree = "<group>";
+		};
+		DC40FC391AE1EBC100BD0A6C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DC40FC3A1AE1EBDA00BD0A6C /* WFStatusModel.h */,
+				DC40FC3B1AE1EBDA00BD0A6C /* WFStatusModel.m */,
+				DC40FC3C1AE1EBDA00BD0A6C /* WFUserModel.h */,
+				DC40FC3D1AE1EBDA00BD0A6C /* WFUserModel.m */,
+				DC0558D81AC16590005664E1 /* Person.h */,
+				DC0558D91AC16590005664E1 /* Person.m */,
+				DC0558DB1AC180EC005664E1 /* Dog.h */,
+				DC0558DC1AC180EC005664E1 /* Dog.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,8 +301,10 @@
 			files = (
 				DC0558DA1AC16590005664E1 /* Person.m in Sources */,
 				DC32A6CC1ABCF88900ED83EA /* AppDelegate.m in Sources */,
+				DC40FC3F1AE1EBDA00BD0A6C /* WFUserModel.m in Sources */,
 				DC0558D71AC15FB1005664E1 /* WFMember.m in Sources */,
 				DC32A6CD1ABCF88900ED83EA /* main.m in Sources */,
+				DC40FC3E1AE1EBDA00BD0A6C /* WFStatusModel.m in Sources */,
 				DC0558DD1AC180EC005664E1 /* Dog.m in Sources */,
 				DC0558D41AC15D37005664E1 /* NSObject+WFExtension.m in Sources */,
 				DC32A6CB1ABCF88900ED83EA /* ViewController.m in Sources */,
