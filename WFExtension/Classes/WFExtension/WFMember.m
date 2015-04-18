@@ -64,7 +64,6 @@ static NSSet *_foundationClasses;
 + (BOOL)isBasicType:(NSString *)type {
     NSString *foundationType = @"cifqdQ";
     if([type hasPrefix:@"NS"] || ([foundationType rangeOfString:type].length == 1)) {
-        NSLog(@"%@", type);
         return TRUE;
     }
     else {
