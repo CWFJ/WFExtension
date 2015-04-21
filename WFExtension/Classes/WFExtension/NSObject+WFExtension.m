@@ -8,6 +8,7 @@
 
 #import "NSObject+WFExtension.h"
 #import <objc/runtime.h>
+#import "WFType.h"
 
 @implementation NSObject (WFExtension)
 
@@ -16,17 +17,33 @@
  *
  *  @param block 遍历回调的block
  */
-- (void)enumerateMembersUsingBlock:(void (^)(WFMember *, BOOL *))block{
-    BOOL stop = FALSE;
-    // 通过运行时，获取属性列表
-    uint outCount = 0;  // 成员属性个数
-    Ivar *varList = class_copyIvarList([self class], &outCount);
++ (void)enumerateMembersUsingBlock:(void (^)(WFMember *, BOOL *))block{
     
-    // 循环获取成员属性，并回调block
-    for (int i = 0; !stop && (i < outCount); ++i) {
-        WFMember *member = [WFMember memberWithIvar:varList[i]];
-        block(member, &stop);
+    static const char WFCachedMembersKey;
+    // 获得成员变量
+    NSMutableArray *cachedMembers = objc_getAssociatedObject(self, &WFCachedMembersKey);
+    if (cachedMembers == nil) {
+        cachedMembers = [NSMutableArray array];
+        
+        // 通过运行时，获取属性列表
+        uint outCount = 0;  // 成员属性个数
+        Ivar *varList = class_copyIvarList(self, &outCount);
+        
+        // 循环获取成员属性，并回调block
+        for (int i = 0; i < outCount; ++i) {
+            WFMember *member = [WFMember memberWithIvar:varList[i]];
+            [cachedMembers addObject:member];
+        }
+        free(varList);
+        objc_setAssociatedObject(self, &WFCachedMembersKey, cachedMembers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+    BOOL stop = FALSE;
+    
+    for (WFMember *member in cachedMembers) {
+        block(member, &stop);
+        if(stop) break;
+    }
+    // 3.释放内存
 }
 /**
  *  通过字典配置对象属性
@@ -34,12 +51,13 @@
  *  @param dict 配置字典
  */
 - (void)cfgWithDict:(NSDictionary *)dict{
-    [self enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
+    [[self class] enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
         // 属性名称
         NSString *memName = member.name;
+        NSString *memType = member.type;
         // 默认值
         id memValue       = dict[memName];
-
+        
         if(!memValue) return;
 
         /**************************************************************
@@ -48,14 +66,14 @@
          *  需要将字典数组转化为模型数组
          *
          *************************************************************/
-        if([member.type hasPrefix:@"NS"] && [member.type containsString:@"Array"])
+        if([NSClassFromString(memType) isSubclassOfClass:[NSArray class]])
         {
             // 需要用户实现了获取数组中成员类方法并且返回字典中可以查询到当前属性所属的 "类"
-            if ([self respondsToSelector:@selector(getArrayInsideClassesTable)] && [self getArrayInsideClassesTable][member.name])
+            if ([self respondsToSelector:@selector(getArrayInsideClassesTable)] && [self getArrayInsideClassesTable][memName])
             {
-                Class memClass = NSClassFromString([self getArrayInsideClassesTable][member.name]);
+                Class memClass = NSClassFromString([self getArrayInsideClassesTable][memName]);
                 // 递归调用创建模型数组
-                memValue       = [memClass objcsWithDictArray:dict[member.name]];
+                memValue       = [memClass objcsWithDictArray:dict[memName]];
             }
         }
         
@@ -65,47 +83,21 @@
          *  递归调用进行配置，将字典转化为对象
          *
          *************************************************************/
-        else if(![WFMember isBasicType:member.type] && ![WFMember isFoundationType:member.type])
+        else if(![WFType isBasicType:memType] && ![WFType isFoundationType:memType])
         {
-            memValue = [[NSClassFromString(member.type) alloc] initWithDict:dict[member.name]];
+            memValue = [[NSClassFromString(memType) alloc] initWithDict:dict[memName]];
         }
         
         /**************************************************
          *
-         *  特殊不能够直接KVC的对象的处理
+         *  类型转换处理
          *
          *************************************************/
-        else if(([member.type isEqualToString:@"Q"] || [member.type isEqualToString:@"c"]) && [memValue isKindOfClass:[NSString class]]) {
-            /** NSUInteger及char类型需要转化为NSNumber再进行转化 */
-            memValue = @([memValue integerValue]);
+        else {
+            memValue = [WFType reviseType:memType withValue:memValue];
         }
-        /**************************************************
-         *
-         *  字典中数值类型与模型中不一致，提供部分转换
-         *
-         *************************************************/
-        Class srcClass = [memValue class];
-        Class dstClass = NSClassFromString(member.type);
-        /** NSString ---> NSURL */
-        if([dstClass isSubclassOfClass:[NSURL class]] && [srcClass isSubclassOfClass:[NSString class]]) {
-            memValue = [NSURL URLWithString:memValue];
-        }
-        /** NSURL ---> NSString */
-        else if ([dstClass isSubclassOfClass:[NSString class]] && [srcClass isSubclassOfClass:[NSURL class]]) {
-            memValue = [(NSURL *)memValue absoluteString];
-        }
-        /** NSString ---> NSNumber */
-        else if ([dstClass isSubclassOfClass:[NSNumber class]] && [srcClass isSubclassOfClass:[NSString class]]) {
-            memValue = [[NSNumberFormatter new] numberFromString:memValue];
-        }
-        /** NSNumber ---> NSString */
-        else if ([dstClass isSubclassOfClass:[NSString class]] && [srcClass isSubclassOfClass:[NSNumber class]]) {
-            memValue = [(NSNumber *)memValue description];
-        }
-        
-        
         // 若member是系统对象
-        [self setValue:memValue forKey:member.name];
+        [self setValue:memValue forKey:memName];
     }];
 }
 
@@ -150,4 +142,6 @@
     
     return [objcs copy];
 }
+
+
 @end

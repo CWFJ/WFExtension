@@ -20,6 +20,7 @@
 		DC32A6CD1ABCF88900ED83EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32A6C91ABCF88900ED83EA /* main.m */; };
 		DC40FC3E1AE1EBDA00BD0A6C /* WFStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC40FC3B1AE1EBDA00BD0A6C /* WFStatusModel.m */; };
 		DC40FC3F1AE1EBDA00BD0A6C /* WFUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC40FC3D1AE1EBDA00BD0A6C /* WFUserModel.m */; };
+		DC7B3D341AE6787A00A77226 /* WFType.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7B3D331AE6787A00A77226 /* WFType.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		DC40FC3B1AE1EBDA00BD0A6C /* WFStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFStatusModel.m; sourceTree = "<group>"; };
 		DC40FC3C1AE1EBDA00BD0A6C /* WFUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFUserModel.h; sourceTree = "<group>"; };
 		DC40FC3D1AE1EBDA00BD0A6C /* WFUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFUserModel.m; sourceTree = "<group>"; };
+		DC7B3D321AE6787A00A77226 /* WFType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFType.h; sourceTree = "<group>"; };
+		DC7B3D331AE6787A00A77226 /* WFType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFType.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 				DC0558D31AC15D37005664E1 /* NSObject+WFExtension.m */,
 				DC0558D51AC15FB1005664E1 /* WFMember.h */,
 				DC0558D61AC15FB1005664E1 /* WFMember.m */,
+				DC7B3D321AE6787A00A77226 /* WFType.h */,
+				DC7B3D331AE6787A00A77226 /* WFType.m */,
 			);
 			path = WFExtension;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				DC0558D71AC15FB1005664E1 /* WFMember.m in Sources */,
 				DC32A6CD1ABCF88900ED83EA /* main.m in Sources */,
 				DC40FC3E1AE1EBDA00BD0A6C /* WFStatusModel.m in Sources */,
+				DC7B3D341AE6787A00A77226 /* WFType.m in Sources */,
 				DC0558DD1AC180EC005664E1 /* Dog.m in Sources */,
 				DC0558D41AC15D37005664E1 /* NSObject+WFExtension.m in Sources */,
 				DC32A6CB1ABCF88900ED83EA /* ViewController.m in Sources */,

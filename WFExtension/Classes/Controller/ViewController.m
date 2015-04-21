@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self test];
+    [self statusModelTest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,7 +39,7 @@
     Person *per = [[Person alloc] init];
     [per cfgWithDict:dict];
     
-    [per enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
+    [[per class] enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
         NSLog(@"%@  ", member.name);
         NSLog(@"%@", [per valueForKey:member.name]);
     }];

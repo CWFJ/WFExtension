@@ -27,7 +27,7 @@
  *
  *  @param block 遍历回调的block
  */
-- (void)enumerateMembersUsingBlock:(void (^)(WFMember *member, BOOL *stop))block;
++ (void)enumerateMembersUsingBlock:(void (^)(WFMember *member, BOOL *stop))block;
 
 /**
  *  通过字典配置对象属性

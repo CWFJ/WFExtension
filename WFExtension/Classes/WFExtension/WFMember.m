@@ -8,7 +8,6 @@
 
 #import "WFMember.h"
 
-static NSSet *_foundationClasses;
 
 @implementation WFMember
 
@@ -43,63 +42,4 @@ static NSSet *_foundationClasses;
     return [[self alloc] initWithIvar:var];
 }
 
-#pragma mark ------<判断基本数据类型>
-/**
- *  判断是否为基本数据类型
- *
- *  @param type 需判断的类型编码名称
- *
- *  @return 结果
- *  @note   类型编码     实际类型
- *          c    ---    char
- *          i    ---    int
- *          f    ---    float
- *          d    ---    double
- *          q    ---    long
- *          q    ---    long long
- *          q    ---    NSInteger
- *          Q    ---    NSUInteger
- *          d    ---    CGFloat
- */
-+ (BOOL)isBasicType:(NSString *)type {
-    NSString *foundationType = @"cifqdQ";
-    if([type hasPrefix:@"NS"] || ([foundationType rangeOfString:type].length == 1)) {
-        return TRUE;
-    }
-    else {
-        return FALSE;
-    }
-}
-
-#pragma mark ------<判断基本Foundation类型>
-/**
- *  判断是否为Foundation数据类型
- *
- *  @param type 需判断的类型编码名称
- *
- *  @return 结果
- */
-+ (BOOL)isFoundationType:(NSString *)type
-{
-    Class typeClass = NSClassFromString(type);
-    return [_foundationClasses containsObject:typeClass];
-}
-
-+ (void)load
-{
-    _foundationClasses = [NSSet setWithObjects:
-                          [NSObject class],
-                          [NSURL class],
-                          [NSDate class],
-                          [NSNumber class],
-                          [NSDecimalNumber class],
-                          [NSData class],
-                          [NSMutableData class],
-                          [NSArray class],
-                          [NSMutableArray class],
-                          [NSDictionary class],
-                          [NSMutableDictionary class],
-                          [NSString class],
-                          [NSMutableString class], nil];
-}
 @end
