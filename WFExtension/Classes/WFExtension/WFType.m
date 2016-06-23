@@ -86,8 +86,13 @@ static NSNumberFormatter *_numFormatter;
  */
 + (id)reviseType:(NSString *)dstType withValue:(id)srcValue {
     
-    NSDictionary *srcClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"__NSCFConstantString":@(3)};
-    NSDictionary *dstClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"Q":@(3), @"c":@(4)};
+    static NSDictionary *srcClass;
+    static NSDictionary *dstClass;
+    if(!srcClass) {
+        srcClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"__NSCFConstantString":@(3)};
+        dstClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"Q":@(3), @"c":@(4)};
+    }
+    
     NSNumber *numSrcIndex = srcClass[NSStringFromClass([srcValue class])];
     if(!numSrcIndex) return srcValue;  // 不支持的类型
     NSNumber *numDstIndex = dstClass[dstType];

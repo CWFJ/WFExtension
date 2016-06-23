@@ -59,21 +59,21 @@
         id memValue       = dict[memName];
         
         if(!memValue) return;
-
+        
         /**************************************************************
          *
          *  若member是NSArray dict[member.name]应该是字典数组
          *  需要将字典数组转化为模型数组
          *
          *************************************************************/
-        if([NSClassFromString(memType) isSubclassOfClass:[NSArray class]])
+        if([memType rangeOfString:@"NSArray"].length > 0)
         {
             // 需要用户实现了获取数组中成员类方法并且返回字典中可以查询到当前属性所属的 "类"
             if ([self respondsToSelector:@selector(getArrayInsideClassesTable)] && [self getArrayInsideClassesTable][memName])
             {
                 Class memClass = NSClassFromString([self getArrayInsideClassesTable][memName]);
                 // 递归调用创建模型数组
-                memValue       = [memClass objcsWithDictArray:dict[memName]];
+                memValue       = [memClass objcsWithDictArray:memValue];
             }
         }
         
@@ -85,7 +85,7 @@
          *************************************************************/
         else if(![WFType isBasicType:memType] && ![WFType isFoundationType:memType])
         {
-            memValue = [[NSClassFromString(memType) alloc] initWithDict:dict[memName]];
+            memValue = [[NSClassFromString(memType) alloc] initWithDict:memValue];
         }
         
         /**************************************************
@@ -135,10 +135,11 @@
         }
         return dictArray.copy;
     }
-    [dictArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+    for (int i = 0; i < dictArray.count; ++i) {
+        NSDictionary *dict = dictArray[i];
         id obj = [[self alloc] initWithDict:dict];
         [objcs addObject:obj];
-    }];
+    }
     
     return [objcs copy];
 }
