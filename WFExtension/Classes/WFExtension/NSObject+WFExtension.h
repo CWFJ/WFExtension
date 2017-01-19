@@ -53,4 +53,13 @@
  *  @return 初始化好的对象数组
  */
 + (NSArray *)objcsWithDictArray:(NSArray *)dictArray;
+
+
+/**
+ *  模型转字典
+ *
+ *  @return 字典对象
+ */
+- (NSMutableDictionary *)keyValues;
+- (NSMutableDictionary *)keyValuesWithMap:(NSDictionary *)map;
 @end

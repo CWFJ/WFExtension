@@ -144,5 +144,76 @@
     return [objcs copy];
 }
 
+/**
+ *  模型转字典
+ *
+ *  @return 字典对象
+ */
+- (NSMutableDictionary *)keyValues {
+    return [self keyValuesWithMap:nil];
+}
+
+/**
+ *  模型转字典
+ *
+ *  @return 字典对象
+ */
+- (NSMutableDictionary *)keyValuesWithMap:(NSDictionary *)map {
+    
+    NSMutableDictionary *keyValues = [NSMutableDictionary dictionary];
+    
+    [[self class] enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
+        
+        // 属性名称
+        NSString *memName  = member.name;
+        NSString *memType  = member.type;
+        id        memValue = [self valueForKey:memName];
+        
+        if(!memValue)
+        {
+            [keyValues setValue:[NSNull null] forKey:memName];
+            return;
+        }
+        
+        /**************************************************************
+         *
+         *  若member是NSArray dict[member.name]应该是字典数组
+         *  需要将模型数组转化为字典数组
+         *
+         *************************************************************/
+        if([memType rangeOfString:@"NSArray"].length > 0)
+        {
+            NSArray *subObjc = (NSArray *)memValue;
+            NSMutableArray *subValues = [NSMutableArray arrayWithCapacity:subObjc.count];
+            [subObjc enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [subValues addObject:[obj keyValuesWithMap:map]];
+            }];
+            memValue = subValues;
+        }
+        
+        /**************************************************************
+         *
+         *  若member是自定义对象 dict[member.name] 应该是个字典,
+         *  递归调用进行配置，将对象转化为字典
+         *
+         *************************************************************/
+        else if(![WFType isBasicType:memType] && ![WFType isFoundationType:memType])
+        {
+            memValue = [memValue keyValuesWithMap:map];
+        }
+        /**************************************************
+         *
+         *  类型转换处理
+         *
+         *************************************************/
+        else {
+            memValue = [WFType reviseType:memType withValue:memValue];
+        }
+        // 若member是系统对象
+        [keyValues setValue:memValue forKey:memName];
+    }];
+    
+    return keyValues;
+}
 
 @end

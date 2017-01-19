@@ -64,9 +64,11 @@ static NSNumberFormatter *_numFormatter;
  *          q    ---    NSInteger
  *          Q    ---    NSUInteger
  *          d    ---    CGFloat
+ *          B    ---    BOOL
+ *          s    ---    Short
  */
 + (BOOL)isBasicType:(NSString *)type {
-    NSString *foundationType = @"cifqdQ";
+    NSString *foundationType = @"cifqdQBs";
     if([type hasPrefix:@"NS"] || ([foundationType rangeOfString:type].length == 1)) {
         return TRUE;
     }
@@ -89,7 +91,7 @@ static NSNumberFormatter *_numFormatter;
     static NSDictionary *srcClass;
     static NSDictionary *dstClass;
     if(!srcClass) {
-        srcClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"__NSCFConstantString":@(3)};
+        srcClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"__NSCFConstantString":@(3), @"NSTaggedPointerString":@(4)};
         dstClass = @{@"NSString":@(0), @"NSURL":@(1), @"NSNumber":@(2), @"Q":@(3), @"c":@(4)};
     }
     
@@ -120,6 +122,8 @@ static NSNumberFormatter *_numFormatter;
         case 0x34:
         case 0x03:
         case 0x04:
+        case 0x43:
+        case 0x44:
             dstValue = @([srcValue integerValue]);
             break;
         default:    /** 不支持或者不需要转换 */
