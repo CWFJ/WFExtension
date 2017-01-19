@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "WFExtension"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "字典/模型转化库"
   s.homepage     = "https://github.com/CWFJ/WFExtension"
   s.license      = "MIT"
