@@ -162,6 +162,11 @@
     
     NSMutableDictionary *keyValues = [NSMutableDictionary dictionary];
     
+    if([WFType isBasicType:NSStringFromClass([self class])] || [WFType isFoundationType:NSStringFromClass([self class])])
+    {
+        return (NSMutableDictionary *)self;
+    }
+    
     [[self class] enumerateMembersUsingBlock:^(WFMember *member, BOOL *stop) {
         
         // 属性名称
